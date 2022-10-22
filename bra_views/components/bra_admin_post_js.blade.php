@@ -1,6 +1,7 @@
 <script>
     require(['layer', 'jquery', 'bra_form'], function (layer, $, bra_form) {
         bra_form.listen({
+            id: "*",
             url: "",
             before_submit: function (fields, cb) {
                 $('[bra-submit]').toggleClass('is-loading')

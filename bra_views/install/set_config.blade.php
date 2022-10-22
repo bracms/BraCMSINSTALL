@@ -97,7 +97,6 @@
             </div>
         </form>
     </div>
-    <a class="layui-btn layui-btn-big layui-btn-normal fr" bra-submit="install" bra-filter="install-form">立即执行安装</a>
 
 
 @endsection
