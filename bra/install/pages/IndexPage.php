@@ -9,7 +9,7 @@ use Bra\core\objects\BraString;
 use Bra\install\objects\BraCurl;
 use Bra\install\objects\BraFS;
 use Bra\install\objects\FileSync;
-use Bra\install\objects\ModelSync;
+use Bra\install\objects\ModelSyncInstall;
 use Exception;
 use Illuminate\Support\Str;
 
@@ -134,19 +134,19 @@ class  IndexPage
 
     public function action_old($query)
     {
-        ModelSync::$host = $query['server_url'];
-        ModelSync::$pass = $query['password'];
+        ModelSyncInstall::$host = $query['server_url'];
+        ModelSyncInstall::$pass = $query['password'];
         $action = $query['action'] ?? 'list_models';
         switch ($action) {
             case  'list_models' :
-                return bra_res(1, '', '', ModelSync::get_module_models($query['module_sign']));
+                return bra_res(1, '', '', ModelSyncInstall::get_module_models($query['module_sign']));
                 break;
             case  'sync_model' :
-                return bra_res(1, '', '', ModelSync::sync_model(trim($query['table']), 'install'));
+                return bra_res(1, '', '', ModelSyncInstall::sync_model(trim($query['table']), 'install'));
             case  'sync_menu' :
-                return bra_res(1, '', '', ModelSync::sync_menu($query['module_sign']));
+                return bra_res(1, '', '', ModelSyncInstall::sync_menu($query['module_sign']));
             case  'sync_roles' :
-                return bra_res(1, '', '', ModelSync::sync_user_roles($query['module_sign']));
+                return bra_res(1, '', '', ModelSyncInstall::sync_user_roles($query['module_sign']));
             case 'lock_install':
                 file_put_contents(config_path() . '/bracms_install.lock', 1);
         }
@@ -205,9 +205,9 @@ class  IndexPage
     public function install_index_download_model($query)
     {
         if (BraRequest::$holder->isMethod("POST")) {
-            return ModelSync::sync_install_model($query['table'], $query['module'], 'install');
+            return ModelSyncInstall::sync_install_model($query['table'], $query['module'], 'install');
         } else {
-            $res = ModelSync::get_module_models('system');
+            $res = ModelSyncInstall::get_module_models('system');
             $assigns['sys_tables'] = array_values($res['data']);
             return ico('view')->run('install.download_model', $assigns);
         }
