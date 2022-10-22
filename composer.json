@@ -1,0 +1,31 @@
+{
+    "require": {
+        "illuminate/database": "^9.30",
+        "symfony/cache": "^6.0",
+        "eftec/bladeone": "^4.6",
+        "symfony/var-dumper": "^6.0",
+        "vlucas/phpdotenv": "^5.4",
+        "symfony/http-foundation": "^6.0",
+        "monolog/monolog": "^2.8",
+        "symfony/lock": "^6.0",
+        "illuminate/pagination": "^9.30",
+        "illuminate/hashing": "^9.30",
+        "illuminate/validation": "^9.30",
+        "intervention/image": "^2.7",
+        "qiniu/php-sdk": "^7.7",
+        "guzzlehttp/guzzle": "^7.5",
+        "laravel-lang/lang": "^12.0",
+        "ramsey/uuid": "^4.5"
+    },
+    "autoload": {
+        "files": [
+            "bra/core/bracms.php"
+        ],
+        "psr-4": {
+            "Bra\\": "bra/",
+            "BraPlugins\\": "plugins/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/"
+        }
+    }
+}

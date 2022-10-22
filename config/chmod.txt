@@ -1,0 +1,6 @@
+config/*
+public/statics/*
+public/themes/*
+bra/*
+admin_views/*
+bra_views/*
