@@ -1,6 +1,7 @@
 <?php
 return [
-	'default_app' => "bra", #default app for web
+	'dev_modules' => ["bra_admin" ,"bra_media" , "health", "wechat_mini" , "wechat_off"], #dev_modules
+	'default_app' => "bra_admin", #default app for web
 	'default_ctrl' => "index", #default controller for web
 	'default_act' => "index", #default action for web
 	'sql_debug' => false, # sql debug
