@@ -186,6 +186,9 @@
 
                 var form_id = that.filter = $(this).attr('bra-filter');
                 form_config = that.configs[form_id];
+                if(!form_config){
+                    console.log(form_id , that.configs)
+                }
                 form_config.trigger = $(this)
                 if(form_config.id === "*"){
                     form_config.form_elem = $("form"+form_config.el+":first");

@@ -183,25 +183,25 @@ define("bra_upload", ["braui"], function (braui) {
                                 // 添加上传dom面板
                                 board[id] = addUploadBoard(files[0], config, files[0].name, "2");
                                 board[id].start = true;
+                                uploader.start();
 
 
 
-
-                                var reader = new FileReader(); //define a Reader
-                                var file = files[0]; //get the File object
-                                if (!file) {
-                                    alert("no file selected");
-                                    return;
-                                } //check if user selected a file
-
-                                reader.onload = function (event) {
-                                     var sha1_hash = sha1(event.target.result);
-                                    alert("Calculated SHA1:" + sha1_hash.toString()); //output result
-                                    setTimeout(function () {
-                                        uploader.start();
-                                    }, 500);
-                                };
-                                reader.readAsArrayBuffer(file); //read file as ArrayBuffer
+                                // var reader = new FileReader(); //define a Reader
+                                // var file = files[0]; //get the File object
+                                // if (!file) {
+                                //     alert("no file selected");
+                                //     return;
+                                // } //check if user selected a file
+                                //
+                                // reader.onload = function (event) {
+                                //      var sha1_hash = sha1(event.target.result);
+                                //     alert("Calculated SHA1:" + sha1_hash.toString()); //output result
+                                //     setTimeout(function () {
+                                //
+                                //     }, 500);
+                                // };
+                                // reader.readAsArrayBuffer(file); //read file as ArrayBuffer
                                 // $("#" + config.container + "_btn_ss").show().click();
                             },
                             FileUploaded: function (up, file, info) {
@@ -226,7 +226,7 @@ define("bra_upload", ["braui"], function (braui) {
                         var Y = myDate.getFullYear(); //获取完整的年份(4位,1970)
                         var M = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
                         var D = myDate.getDate(); //获取当前日(1-31)
-                        key = "upload_file/" + parseInt(config.user_id) + "/" + Y + M + D + "/" + new Date().getTime() + "_" + file.name;
+                        key = "annex/" + parseInt(config.user_id) + "/" + Y + M + D + "/" + new Date().getTime() + "_" + file.name;
                         putExtra.params["x:name"] = key.split(".")[0];
                         var id = file.id;
                         chunk_size = uploader.getOption("chunk_size");
@@ -380,6 +380,7 @@ define("bra_upload", ["braui"], function (braui) {
                             filemime: file.type,
                             file_type: file.type.split("/")[0],
                             md5: response.hash,
+                            _token: csrf_token,
                             filesize: file.origSize
                         };
 
