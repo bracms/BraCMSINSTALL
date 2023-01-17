@@ -15,7 +15,11 @@
         "qiniu/php-sdk": "^7.7",
         "guzzlehttp/guzzle": "^7.5",
         "laravel-lang/lang": "^12.0",
-        "ramsey/uuid": "^4.5"
+        "wechatpay/wechatpay": "^1.4",
+        "doctrine/dbal": "^3.5",
+        "ramsey/uuid": "^4.5",
+        "ext-simplexml": "*",
+        "ext-libxml": "*"
     },
     "autoload": {
         "files": [

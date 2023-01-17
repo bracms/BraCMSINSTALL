@@ -85,6 +85,9 @@ class App {
 			$response->headers->setCookie($cookie);
 		}
 		$response->setStatusCode($status_code);
+		$response->headers->set("Access-Control-Allow-Origin" , '*');
+        $response->headers->set("Access-Control-Allow-Headers" , 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+
 		$response->setContent(is_string($this->page_data) ? $this->page_data : json_encode($this->page_data));
 		$response->send();
 	}

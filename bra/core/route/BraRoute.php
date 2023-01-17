@@ -35,7 +35,11 @@ class BraRoute {
 		}
 		//Generate URL
 		if ($domain) {
-			return str_replace(BraRequest::$holder->getHost(), $domain, $url);
+            if($domain === true){
+                return BraRequest::$holder->getSchemeAndHttpHost() . $url;
+            }else{
+                return str_replace(BraRequest::$holder->getHost(), $domain, $url);
+            }
 		}
 
 		return $url;

@@ -121,6 +121,8 @@ function local_path($path = ''): string {
 }
 
 #[NoReturn] function abort($bra_res, $type = '', $headers = []) {
+
+    hour_log(json_encode($bra_res), chl: 'abort');
     ico('app')->abort($bra_res, $type, $headers);
 }
 
