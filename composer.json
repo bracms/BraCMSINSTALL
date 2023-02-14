@@ -19,7 +19,8 @@
         "doctrine/dbal": "^3.5",
         "ramsey/uuid": "^4.5",
         "ext-simplexml": "*",
-        "ext-libxml": "*"
+        "ext-libxml": "*",
+        "flc/dysms": "^1.0"
     },
     "autoload": {
         "files": [
