@@ -19,6 +19,7 @@ return [
 	'env' => env('APP_ENV', 'production'),
 	'debug' => (bool)env('APP_DEBUG', false),
 	'locale' => 'en',
+    'is_checking' => false,
 	'key' => env('APP_KEY'),
 	'cipher' => 'AES-256-CBC',
 	# the middlewares , the order is important

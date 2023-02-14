@@ -81,12 +81,14 @@ class Config {
             $filename = local_path('bra' . DS . $module) . $module . "_config.php";
             $install_lock = local_path('bra' . DS . $module) . $module . "_install.lock";
             if (is_file($filename) && is_file($install_lock)) {
-                $this->load_module_config(require $filename);
+                $this->load_module_config($module_config = require $filename);
+                $this->items[$module . "_config"] = $module_config;
             }
         }
     }
 
     public function load_module_config($module_config): void {
+
         #middlewares
         if (is_array($module_config['middle_middlewares'] ?? false)) {
             $this->items['app']['middle_middlewares'] = array_merge($this->items['app']['middle_middlewares'], $module_config['middle_middlewares']);
