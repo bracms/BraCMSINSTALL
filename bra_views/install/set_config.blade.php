@@ -92,8 +92,8 @@
                 <div class="button is-static">保证密码最少6位</div></div>
             </div>
             <div class="step-btns">
-                <a href="javascript:history.go(-1);" class="layui-btn layui-btn-primary layui-btn-big fl">返回上一步</a>
-                <a class="layui-btn layui-btn-big layui-btn-normal fr" bra-submit="install" bra-filter="install-form">立即执行安装</a>
+                <a href="javascript:history.go(-1);" class="button is-primary layui-btn-big fl">返回上一步</a>
+                <a class="button is-normal fr" bra-submit="install" bra-filter="install-form">立即执行安装</a>
             </div>
         </form>
     </div>

@@ -39,6 +39,10 @@
     #form-icon-preview{float:left;width:34px;height:36px;line-height:36px;font-size:30px !important;border:1px solid #e6e6e6;text-align:center;border-radius:3px;}
     .j-iframe-pop{margin:0 10px;}
     .help-tips{cursor:pointer;}
-    .layui-table td, .layui-table th{text-align:left;}
-    .layui-table tbody tr.no{background-color:#f00;color:#fff;}
+    table{
+        width: 100%;
+    }
+    .bra-body-content{
+        height: 100vh;
+    }
 </style>

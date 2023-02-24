@@ -139,3 +139,27 @@ function trans($key = null, $replace = [], $locale = null) {
 function lang($key = null, $replace = [], $locale = null) {
     return $key;
 }
+
+
+function bra_asset($theme , $device, $module_sign, $file_name, $secure = null)
+{
+    $path = 'themes/' . $theme . '/' . $device . '/' . $module_sign . '/' . $file_name;
+
+    return asset($path, $secure);
+}
+
+
+/**
+ * Generate an asset path for the application.
+ *
+ * @param string $path
+ * @return string
+ */
+function asset (string $path , $host = ''): string {
+    $suffix = '';
+    if (config('app.debug')) {
+        $suffix = time();
+    }
+
+    return $host . config('view.asset_root') . ltrim($path, "/") . "?v=" . ico('app')->get_version() . $suffix;
+}

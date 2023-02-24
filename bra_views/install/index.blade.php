@@ -40,7 +40,7 @@
             </div>
         </fieldset>
         <div class="step-btns">
-            <a href="/install/index/check" class="bra-btn is-primary is-rounded">同意协议并安装系统</a>
+            <a href="/install/index/check" class="button is-primary is-rounded">同意协议并安装系统</a>
         </div>
     </div>
 

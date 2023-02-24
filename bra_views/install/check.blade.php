@@ -2,8 +2,8 @@
 @section('main')
     <div class="install-box">
         <fieldset class="">
-            <legend>运行环境检测</legend>
-            <table class="table">
+            <legend class="title">运行环境检测</legend>
+            <table class="table is-bordered">
                 <thead>
                 <tr>
                     <th>环境名称</th>
@@ -21,7 +21,7 @@
                 @endforeach
                 </tbody>
             </table>
-            <table class="layui-table">
+            <table class="table is-bordered">
                 <thead>
                 <tr>
                     <th>目录/文件</th>
@@ -39,7 +39,7 @@
                 @endforeach
                 </tbody>
             </table>
-            <table class="table">
+            <table class="table  is-bordered">
                 <thead>
                 <tr>
                     <th>函数/扩展</th>
@@ -60,11 +60,11 @@
         </fieldset>
 
         <div class="step-btns">
-            <a href="javascript:history.go(-1);" class="">返回上一步</a>
+            <a href="javascript:history.go(-1);" class="button">返回上一步</a>
             @if($check_error)
-                <a onclick="alert('please fix all error!')"  class="">进行下一步</a>
+                <a onclick="alert('please fix all error!')"  class="button">进行下一步</a>
             @else
-                <a href="/install/index/auth_code" class="">进行下一步</a>
+                <a href="/install/index/auth_code" class="button">进行下一步</a>
 
             @endif
         </div>
