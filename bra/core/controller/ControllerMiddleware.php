@@ -61,7 +61,11 @@ class ControllerMiddleware extends Middleware {
 					abort(bra_res([40403 , 404], $pager_name . "@" . $action_sign));
 				}
 			} else {
-				$page_data = $container->call([$bra_page, $action_sign] , ['query' => $query]);
+                if(AUTH_GUARD === 'web'){
+                    $_query = $query['query'] ?? [];
+                    $query = array_merge($query , $_query);
+                }
+                $page_data = $container->call([$bra_page, $action_sign] , ['query' => $query]);
 			}
 
 			return $page_data ?? "";
