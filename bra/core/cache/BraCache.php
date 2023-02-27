@@ -36,8 +36,10 @@ class BraCache extends Holder {
         $this->$cache_driver();
     }
 
-    public static function get ($key, callable $closure = null) {
-        $item = self::$holder->getItem($key);
+    public static function get ($cache_key, callable $closure = null) {
+        $prefix = config('redis.cache_prefix');
+        $cache_key = $prefix . $cache_key;
+        $item = self::$holder->getItem($cache_key);
         if (!$item->isHit()) {
             if (is_callable($closure)) {
                 return $closure($item);
@@ -51,16 +53,20 @@ class BraCache extends Holder {
         }
     }
 
-    public static function lock ($key, callable $closure) {
+    public static function lock ($cache_key, callable $closure) {
+        $prefix = config('redis.cache_prefix');
+        $cache_key = $prefix . $cache_key;
         $store = new RedisStore(self::$lock_store);
         $factory = new LockFactory($store);
-        $lock = $factory->createLock($key . "_cache_lock", 10);
+        $lock = $factory->createLock($cache_key . "_cache_lock", 10);
         $lock->acquire();
 
         return $closure($lock);
     }
 
     public static function set ($cache_key, $value, $tags = [], $expire = 3600) {
+        $prefix = config('redis.cache_prefix');
+        $cache_key = $prefix . $cache_key;
         $item = self::$holder->getItem($cache_key);
         $item->expiresAfter($expire);
         if ($tags) {
