@@ -86,6 +86,8 @@ class  IndexPage
         if (!$database['DB_PASSWORD']) {
             return bra_res(500, "请输入数据库密码");
         }
+        //写入缓存前缀
+        $database['REDIS_PREFIX'] = BraString::random(6);
         $this->put_env($database);
         return ['code' => 1, 'msg' => '保存成功'];
     }
@@ -152,7 +154,7 @@ class  IndexPage
         }
     }
 
-    public function _check_licence($licence)
+    public static function _check_licence($licence)
     {
         $url = API_URL . 'bracms/product/check_licence';
         $curl = new BraCurl([], 'ajax');
@@ -165,7 +167,11 @@ class  IndexPage
     public function install_index_download_file($query)
     {
         if (BraRequest::$holder->isMethod("POST")) {
-            return FileSync::down_file($query['module'], $query['file_path']);
+            if(str_contains($query['file_path'] , '.lock')){
+                return bra_res(1 ,  '锁定文件无需下载');
+            }else{
+                return FileSync::down_file($query['module'], $query['file_path']);
+            }
         } else {
 //保存用户名//保存密码
             $updater = new FileSync();
