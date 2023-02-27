@@ -215,25 +215,51 @@ class  IndexPage
         }
     }
 
+    public static function get_db_version() {
+        $results = BraDB::$holder->getConnection()->select("select version() as version");
+        $version = explode("-" , $results[0]->version);
+
+
+        if (str_contains($results[0]->version, 'Maria')) {
+            $mysql_dbname = 'mariadb';
+        }else{
+            $mysql_dbname = 'mysql';
+        }
+        $mariadb_version = $version[0];
+        return [$mysql_dbname , $mariadb_version];
+    }
+
     private function checkNnv()
     {
+        list($mysql_name , $mysql_version) = self::get_db_version();
         $items = [
             'os' => ['操作系统', '不限制', '类Unix', PHP_OS, 'ok'],
             'php' => ['PHP版本', '8.0', '8.0及以上', PHP_VERSION, 'ok'],
             'gd' => ['GD库', '2.0', '2.0及以上', '未知', 'ok'],
+            'mysql' => ['Mysql', '5.6.0', '5.7.7及以上', $mysql_version, 'ok'],
         ];
         if ($items['php'][3] < $items['php'][1]) {
-            $items['php'][4] = 'no';
+            $items['php'][4] = 'has-background-danger';
             $this->check_error = true;
         }
         $tmp = function_exists('gd_info') ? gd_info() : [];
         if (empty($tmp['GD Version'])) {
             $items['gd'][3] = '未安装';
-            $items['gd'][4] = 'no';
+            $items['gd'][4] = 'has-background-danger';
             $this->check_error = true;
         } else {
             $items['gd'][3] = $tmp['GD Version'];
         }
+
+        if($mysql_name === 'mysql'){
+            if(version_compare($items['mysql'][3] , $items['mysql'][1] , '<')){
+                $items['mysql'][4] = 'has-background-danger';
+                $this->check_error = true;
+            }
+        }else{
+            $items['mysql'][3] = '未知';
+        }
+
 
         return $items;
     }

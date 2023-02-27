@@ -13,7 +13,7 @@
                 </thead>
                 <tbody>
                 @foreach($env as $vo)
-                    <tr class="{$vo[4]}">
+                    <tr class="{{$vo[4]}}">
                         <td>{{$vo[0]}}</td>
                         <td>{{$vo[3]}}</td>
                         <td>{{$vo[2]}}</td>
@@ -31,7 +31,7 @@
                 </thead>
                 <tbody>
                 @foreach($dir as $filemod)
-                    <tr class="<?php echo $filemod['is_writable'] ? "yes" : 'no'?>">
+                    <tr class="<?php echo $filemod['is_writable'] ? "yes" : 'has-background-danger'?>">
                         <td><?php echo $filemod['file'] ?></td>
                         <td><span>可写</span></td>
                         <td><?php echo $filemod['is_writable'] ? '可写' : '不可写' ?></td>
@@ -49,7 +49,7 @@
                 </thead>
                 <tbody>
                 @foreach($func as $vo)
-                    <tr class="{$vo[2]}">
+                    <tr class="{{$vo[2]}}">
                         <td>{{$vo[0]}}</td>
                         <td>{{$vo[3]}}</td>
                         <td>{{$vo[1]}}</td>
