@@ -89,6 +89,7 @@ class  IndexPage
         //写入缓存前缀
         $database['REDIS_PREFIX'] = BraString::random(6);
         $this->put_env($database);
+        BraCache::clear();
         return ['code' => 1, 'msg' => '保存成功'];
     }
 
@@ -100,11 +101,6 @@ class  IndexPage
         $DB = ico('db');
         $this_db = $DB->getConnection();
         $database = $this_db->getConfig();
-        try {
-            $this_db->query("CREATE DATABASE IF NOT EXISTS `{$database['database']}` DEFAULT CHARACTER SET utf8mb4");
-        } catch (Exception $e) {
-            return bra_res(503, $e->getMessage());
-        }
         try {
             $test = $this_db->select("show databases like '{$database['database']}';");
             if (count($test) == 0) {
