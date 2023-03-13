@@ -16,5 +16,5 @@ $ico->instance('ico', Container::setInstance($ico));
 $ico->instance('request', $ico->make(BraRequest::class)); // config free
 $ico->instance('config', $ico->make(Config::class));
 $ico->instance('logger', $ico->make(BraLogger::class)); // config free
-(new App($ico))->send();
+(new App($ico))->run()->send();
 

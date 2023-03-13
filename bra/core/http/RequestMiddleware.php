@@ -7,7 +7,9 @@ use Illuminate\Support\Str;
 
 class RequestMiddleware extends Middleware {
     function handle () {
-        $this->attach_params($this->parse(ico('request')->getPathInfo()));
+        $request_path = ico('request')->getPathInfo();
+        $params = $this->parse($request_path);
+        $this->attach_params($params);
     }
 
     private function parse (string $result): array {
