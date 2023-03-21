@@ -11,8 +11,6 @@ class MiddlewareLayers {
 	public function __construct () {
 		$this->start = function () {
 		};
-
-		$this->stack_middleware()->handle();
 	}
 
 	public function stack_middleware (): static {

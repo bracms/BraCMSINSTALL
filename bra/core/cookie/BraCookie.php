@@ -16,8 +16,8 @@ use Symfony\Component\HttpFoundation\Cookie;
 class BraCookie {
 	public static array $queued_cookies = [];
 
-	public static function queue ($key, $value , int $expire = 0) {
-		self::$queued_cookies[$key] = Cookie::create($key , $value , $expire);
+	public static function queue ($key, $value , int $expire =  86400 * 365 * 10) {
+		self::$queued_cookies[$key] = Cookie::create($key , $value , time() + $expire);
 	}
 
 	public static function get ($key): float|bool|int|string|null {

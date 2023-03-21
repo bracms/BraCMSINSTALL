@@ -12,6 +12,10 @@ use Symfony\Component\HttpFoundation\Request;
 class BraRequest extends Holder {
 
 	public static Request $holder;
+    public array $get = [];
+    public array $post = [];
+    public array $files = [];
+    public string $request_uri = "";
 
 	public function __construct () {
 		self::$holder = Request::createFromGlobals();

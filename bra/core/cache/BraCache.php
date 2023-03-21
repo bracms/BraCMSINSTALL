@@ -36,6 +36,14 @@ class BraCache extends Holder {
         $this->$cache_driver();
     }
 
+    public static function clear() {
+        self::$holder->clear();
+        $cache_config_path = local_path('storage') . "config.php";
+        if ( file_exists($cache_config_path)) {
+            unlink( $cache_config_path);
+        }
+    }
+
     public static function get ($cache_key, callable $closure = null) {
         $prefix = config('redis.cache_prefix');
         $cache_key = $prefix . $cache_key;
