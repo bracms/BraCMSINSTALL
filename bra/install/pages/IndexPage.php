@@ -89,7 +89,7 @@ class  IndexPage
         //写入缓存前缀
         $database['REDIS_PREFIX'] = BraString::random(6);
         $this->put_env($database);
-        BraCache::clear();
+        BraCache::$holder->clear();
         return ['code' => 1, 'msg' => '保存成功'];
     }
 
@@ -231,7 +231,7 @@ class  IndexPage
 
     private function checkNnv()
     {
-        list($mysql_name , $mysql_version) = self::get_db_version();
+//        list($mysql_name , $mysql_version) = self::get_db_version();
         $items = [
             'os' => ['操作系统', '不限制', '类Unix', PHP_OS, 'ok'],
             'php' => ['PHP版本', '8.0', '8.0及以上', PHP_VERSION, 'ok'],

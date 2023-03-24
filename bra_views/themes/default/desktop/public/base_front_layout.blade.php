@@ -7,11 +7,16 @@
     <link type="favicon" rel="shortcut icon" href="/favicon.ico"/>
     <meta name="Generator" content="BraCMS"/>
     <title>{{$seo['seo_title']}}</title>
+    <meta name="keywords" content="{{$seo['seo_keywords']}}">
+    <meta name="description" content="{{$seo['seo_desc']}}">
+    <meta name="baidu-site-verification" content="codeva-tj7UrP0wWl" />
+
+
     @section('css_icon')
         <link rel="stylesheet" href="{{asset('statics/css/bra_icon.css')}}">
     @show
     @section('bra_css')
-        <link rel="stylesheet" type="text/css" href="{{asset('statics/packs/braui/bra.min.css')}}" media="all"/>
+        <link rel="stylesheet" type="text/css" href="{{asset('/statics/packs/bulma/bulma.min.css')}}" media="all"/>
     @show
 
     @section('animate_css')
