@@ -179,7 +179,7 @@ define("braui", ["jquery", 'layer'], function ($, layer) {
                     shadeClose: true, //点击背景关闭
                     shade: 0.4,  //透明度
                     content: url,
-                    area: ['100%', '100%']
+                    area: ['99%', '99%']
                 });
             };
 //load a url , expecting a json data with status

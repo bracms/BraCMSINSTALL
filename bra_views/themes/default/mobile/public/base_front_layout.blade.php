@@ -11,8 +11,10 @@
         <link rel="stylesheet" href="{{asset('statics/css/bra_icon.css')}}">
     @show
     @section('bra_css')
-        <link rel="stylesheet" type="text/css" href="{{asset('statics/packs/braui/bra.min.css')}}" media="all"/>
+        <link rel="stylesheet" type="text/css" href="{{asset('/statics/packs/bulma/bulma.min.css')}}" media="all"/>
+        <link rel="stylesheet" type="text/css" href="{{asset('/statics/packs/braui/bra-admin.css')}}" media="all"/>
     @show
+
 
     @section('animate_css')
         <link rel="stylesheet" type="text/css" href="{{asset('statics/packs/animate/animate.css')}}" media="all"/>

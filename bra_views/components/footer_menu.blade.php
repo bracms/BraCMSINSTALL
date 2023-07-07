@@ -1,10 +1,10 @@
 <nav class="navbar is-fixed-bottom has-text-centered is-flex is-box"
      style="width: 100%;border-top: 1px solid #eee;z-index: 999">
     @foreach($navs as $k=>$nav)
-        @if(strpos($nav['old_data']['position'] , ',4,')!==false  &&  $nav['old_data']['show_menu'] ==1)
-            <a href="{{$nav['__url']}}" class="tabbar__item_{{$k}} column is-relative">
+        @if(strpos($nav->old_data['position'] , ',4,')!==false  &&  $nav->old_data['show_menu'] ==1)
+            <a href="{{$nav['link_url']}}" class="tabbar__item_{{$k}} column is-relative">
                 <div class="braui-tabbar__icon bra-img is-32x32 is-centered" style="margin:auto">
-                    {!!$nav['image']!!}
+                    <img src="{!!$nav['image'][0]['url']!!}" alt="">
                 </div>
                 <div class="braui-tabbar__txt" style="font-size:12px;padding-top:2px">
 

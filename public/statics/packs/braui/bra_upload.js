@@ -95,7 +95,7 @@ define("bra_upload", ["braui"], function (braui) {
                 console.log(file);
                 var file_type;
                 if(file.annex_id){
-                    file_type = file.annex.filemime;
+                    file_type = file.annex.file_mime;
                 }else{
                     file_type = file.type;
                 }
@@ -167,12 +167,12 @@ define("bra_upload", ["braui"], function (braui) {
                                 /**
                                  *
                                  */
-                                for (var key in config.default_value) {
-                                    var file_info = config.default_value[key];
-                                    file_info.size = file_info.filesize;
-                                    file_info.key = file_info.filename;
-                                    addUploadBoard(file_info, config, file_info.filename, "2");
-                                }
+                                // for (var key in config.default_value) {
+                                //     var file_info = config.default_value[key];
+                                //     file_info.size = file_info.filesize;
+                                //     file_info.key = file_info.filename;
+                                //     addUploadBoard(file_info, config, file_info.filename, "2");
+                                // }
                             },
                             FilesAdded: function (up, files) {
 

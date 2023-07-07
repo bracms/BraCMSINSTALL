@@ -156,7 +156,7 @@
                     }
                 } else {
                     if (typeof form_config.error === 'function') {
-                        form_config.error(ret_data);
+                        form_config.error(ret_data, form_config);
                     }
                 }
             }, 'json').fail(function (resp) {

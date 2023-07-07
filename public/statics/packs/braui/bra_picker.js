@@ -266,5 +266,5 @@ define("bra_picker", ['braui'], function () {
         });
     }
 
-    return new obj();
+    return obj;
 });

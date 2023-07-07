@@ -67,7 +67,7 @@ body.bra-scroll-bar{background:0 0}
 .bra-admin-top{position:fixed;right:0;z-index:2000; top:0;width:100%;overflow:hidden;border-bottom:1px solid rgba(170, 170, 170, 0.22);}
 .bra-admin-top .column{line-height:55px;height:55px;}
 .bra-admin-top .column.open_item{font-size:14px;border-left:1px solid #eee;cursor:pointer;}
-.bra-admin-top .open_scroll{}
+.bra-admin-top .open_scroll{overflow: scroll}
 .bra-admin-top .bra-admin-top-right a{padding:0 10px}
 .bra-admin-top .bra-admin-top-right i.layui-icon-close{margin-right:10px}
 .bar_admin_logo{
