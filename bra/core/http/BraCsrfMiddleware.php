@@ -53,8 +53,10 @@ EVBUFFER_EOF;
                 return;
             }
             if (!self::is_csrf_valid(BraRequest::$holder->request->get("_token"))) {
-                hour_log(" csrf valid failed");
-                abort(bra_res(500, 'csrf valid failed'));
+                daily_log(" csrf valid failed");
+                abort(bra_res(50001, 'csrf valid failed'  , data: [
+                    'token' => self::create_csrf_token("_token")
+                ]));
             }
         }
     }

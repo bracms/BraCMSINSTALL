@@ -52,8 +52,13 @@ class App {
         return $this;
     }
 
-	#[NoReturn] public function abort (array $bra_res, $type = '', $headers = [] ) {
-		$status_code = $bra_res['status_code'];
+	#[NoReturn] public function abort (array $bra_res, $type = '', $headers = [] , $config = [] ) {
+        $status_code = $bra_res['status_code'];
+        if($config['redirect']){
+            $headers['Location'] = "{$bra_res['url']}";
+            $this->send($status_code, $headers);
+            exit();
+        }
 		unset($bra_res['status_code']);
 		if (!ico('request')->isXmlHttpRequest() && $type !== 'json') {
 			if ($bra_res['code'] == 1) {
@@ -93,7 +98,12 @@ class App {
 		$response->headers->set("Access-Control-Allow-Origin" , '*');
         $response->headers->set("Access-Control-Allow-Headers" , 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
 
-		$response->setContent(is_string($this->page_data) ? $this->page_data : json_encode($this->page_data));
+        foreach ($headers as $k => $header){
+            $response->headers->set($k, $header);
+        }
+        if(isset($this->page_data)){
+            $response->setContent(is_string($this->page_data) ? $this->page_data : json_encode($this->page_data));
+        }
 		$response->send();
 	}
 

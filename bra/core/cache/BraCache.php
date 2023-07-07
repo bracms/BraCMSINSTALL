@@ -78,6 +78,9 @@ class BraCache extends Holder {
         $item = self::$holder->getItem($cache_key);
         $item->expiresAfter($expire);
         if ($tags) {
+            foreach ($tags as &$tag){
+                $tag = $prefix . $tag;
+            }
             $item->tag($tags);
         }
         $item->set($value);
@@ -85,10 +88,16 @@ class BraCache extends Holder {
     }
 
     public static function del ($cache_key) {
+        $prefix = config('redis.cache_prefix');
+        $cache_key = $prefix . $cache_key;
         self::$holder->delete($cache_key);
     }
 
     public static function del_tags ($tags) {
+        $prefix = config('redis.cache_prefix');
+        foreach ($tags as &$tag){
+            $tag = $prefix . $tag;
+        }
         self::$holder->invalidateTags($tags);
     }
 

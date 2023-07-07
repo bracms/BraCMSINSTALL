@@ -4,6 +4,8 @@ namespace Bra\core\http;
 
 use Bra\core\middleware\Middleware;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpFoundation\FileBag;
+use Symfony\Component\HttpFoundation\ParameterBag;
 
 class RequestMiddleware extends Middleware {
     function handle () {
@@ -20,7 +22,7 @@ class RequestMiddleware extends Middleware {
 
             return $this->parse_api($result);
         } else {
-            $result = array_values(explode('/', $result));
+            $result = array_filter( array_values(explode('/', $result)));
             if (count($result) < 3) {
                 $safe = config('bra_safe');
                 switch (count($result)) {
@@ -60,15 +62,35 @@ class RequestMiddleware extends Middleware {
             $datas = BraRequest::$holder->request->all();
             $datas['query'] = json_decode($datas['query'], 1);
         }
-        $query = $datas['query'];
+
+
+        $params =  $this->decode();
+
+        $inputs = $params['inputs'];
+        $files = $params['files'];
+        if($files){
+            BraRequest::$holder->files = new FileBag($files);
+        }
+
+        if($inputs){
+            $datas = array_merge($datas , $inputs  );
+            if(is_string($datas['query'])){
+                $datas['query'] = json_decode($datas['query'] , 1);
+            }
+        }
+
+        $query = $datas['query'] ?? [];
         unset($datas['query']);
         $UUIDv4 = '/^[0-9A-F]{8}-[0-9A-F]{4}-4[0-9A-F]{3}-[89AB][0-9A-F]{3}-[0-9A-F]{12}$/i';
+
+
         if (!preg_match($UUIDv4, $datas['bra_uuid'])) {
             if(BraRequest::$holder->getMethod()  === 'OPTIONS'){
                 hour_log(BraRequest::$holder->getMethod() , chl: 'request');
                 abort(bra_res([200, 200], '' ));
             }
-            abort(bra_res([500, 404], 'UUID Not Found' ,data: [$datas ,BraRequest::$holder->request->all()]));
+
+            abort(bra_res([500, 404], 'UUID Not Found' ,data: [BraRequest::$holder->request->all()]));
         }else{
 
             hour_log(BraRequest::$holder->getMethod() , chl: 'request');
@@ -128,5 +150,100 @@ class RequestMiddleware extends Middleware {
         BraRequest::$holder->request->add($params);
         BraRequest::$holder->request->add(BraRequest::$holder->query->all());
         BraRequest::$holder->request->add(BraRequest::$holder->files->all());
+    }
+
+
+    public function decode()
+    {
+        $files = [];
+        $datas = [];
+        // Fetch content and determine boundary
+        $rawData = file_get_contents('php://input');
+        $boundary = substr($rawData, 0, strpos($rawData, "\r\n"));
+
+        if(!$boundary){
+            return  [
+                "inputs" => [],
+                "files" => []
+            ];
+        }
+        // Fetch and process each part
+        $parts = array_slice(explode($boundary, $rawData), 1);
+
+        foreach ($parts as $part) {
+            // If this is the last part, break
+            if ($part == "--\r\n") {
+                break;
+            }
+
+            // Separate content from headers
+            $part = ltrim($part, "\r\n");
+            list($rawHeaders, $content) = explode("\r\n\r\n", $part, 2);
+            $content = substr($content, 0, strlen($content) - 2);
+
+            // Parse the headers list
+            $rawHeaders = explode("\r\n", $rawHeaders);
+            $headers = [];
+
+            foreach ($rawHeaders as $header) {
+                list($name, $value) = explode(':', $header);
+                $headers[strtolower($name)] = ltrim($value, ' ');
+            }
+
+            // Parse the Content-Disposition to get the field name, etc.
+            if (isset($headers['content-disposition'])) {
+                preg_match('/^form-data; *name="([^"]+)"(; *filename="([^"]+)")?/', $headers['content-disposition'], $matches);
+
+                $fieldName = $matches[1];
+                $fileName = (isset($matches[3]) ? $matches[3] : null);
+                parse_str($fieldName, $fieldNameAsArray);
+
+                // If we have a file, save it. Otherwise, save the data.
+                if ($fileName !== null) {
+                    $localFileName = tempnam(sys_get_temp_dir(), 'bracms_file_');
+
+                    file_put_contents($localFileName, $content);
+
+                    $fileData = [
+                        'name' => $fileName,
+                        'type' => $headers['content-type'],
+                        'tmp_name' => $localFileName,
+                        'error' => 0,
+                        'size' => filesize($localFileName),
+                    ];
+
+                    $this->parseFieldName($files, array_keys($fieldNameAsArray)[0], array_values($fieldNameAsArray)[0], $fileData);
+
+                    // register a shutdown function to clean up the temporary file
+                    register_shutdown_function(function () use($localFileName) {
+                        unlink($localFileName);
+                    });
+                } else {
+                    $this->parseFieldName($datas, array_keys($fieldNameAsArray)[0], array_values($fieldNameAsArray)[0], $content);
+                }
+            }
+        }
+
+        $fields = new ParameterBag($datas);
+
+        return [
+            "inputs" => $fields->all(),
+            "files" => $files
+        ];
+    }
+
+    public function parseFieldName(&$var, $fieldBaseName, $fieldNameAsArray, $content)
+    {
+        if (empty($fieldNameAsArray)) {
+            $var[$fieldBaseName] = $content;
+            return;
+        }
+
+        foreach ($fieldNameAsArray as $key => $value) {
+            if (gettype($value) === 'string') {
+                //  TODO: deal with nested arrays
+                $var[$fieldBaseName][$key] = $content;
+            }
+        }
     }
 }

@@ -96,7 +96,7 @@ function bra_time_log($time, $level, $message, $context = [], $chl = 'bracms') {
         "secondly" => date("Y-m-d H:i:s"),
     };
     # chl , level , time
-    $path = sprintf(config('log.monolog.path_prefix'), $chl, $level, $time . "_" . $file_name);
+    $path = sprintf(config('log.monolog.path_prefix'), $chl, $level, BRA_ENV. $time . "_" . $file_name);
     bra_log($message, $level, $context, $chl, $path);
 }
 
@@ -120,10 +120,10 @@ function local_path($path = ''): string {
     }
 }
 
-#[NoReturn] function abort($bra_res, $type = '', $headers = []) {
+#[NoReturn] function abort($bra_res, $type = '', $headers = [] , $config = []) {
 
     hour_log(json_encode($bra_res), chl: 'abort');
-    ico('app')->abort($bra_res, $type, $headers);
+    ico('app')->abort($bra_res, $type, $headers , $config);
 }
 
 function ico_make($alias, $class) {

@@ -33,4 +33,9 @@ class BraDB extends Holder {
 		return self::$holder->schema($connect)->hasTable($table_name);
 	}
 
+    public static function add_connection(string $config_name)
+    {
+        self::$holder->addConnection(config('database.connections')[$config_name] , $config_name);
+    }
+
 }

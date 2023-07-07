@@ -25,11 +25,11 @@ class BraArray {
 			$donde['area_id'] = $area_id;
 		}
 		$item = D("config")->bra_item($donde);
-		return json_decode($item['data'] , 1) ?? [];
+		return json_decode($item['data'] ?? '' , 1) ?? [];
 	}
 
 	public static function to_array ($collection) {
-		return json_decode(json_encode($collection), 1);
+		return is_null($collection)  ?: json_decode(json_encode($collection), 1);
 	}
 
 	public static function sort_by_val_with_key (&$arr, $key = 'listorder', $o = 'desc') {
@@ -72,14 +72,21 @@ class BraArray {
 	 * @param $a
 	 * @return string
 	 */
-	public static function md5_array ($a) {
+	public static function md5_array (array $a) {
 		$res2 = [];
 		foreach ($a as $k => $val) {
 			$_res = "$k-";
 			if (is_array($val)) {
 				$_res .= self::md5_array($val);
 			} else {
-				$_res .= "#$val";
+
+                if(is_string($val) || is_numeric($val)|| is_bool($val)){
+                    $_res .= "#$val";
+                }else{
+//                    throw new \Exception('not a string');
+
+                }
+
 			}
 			$res2[] = $_res;
 		}

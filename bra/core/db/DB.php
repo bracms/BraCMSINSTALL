@@ -16,9 +16,13 @@ class DB extends Manager {
 
 	public function __construct () {
 		parent::__construct();
-		$this->addConnection(config('database.connections')[config('database.default')]);
-		$this->setAsGlobal();
-		$this->bootEloquent();
+		$this->init_db();
 	}
 
+    public function init_db()
+    {
+        $this->addConnection(config('database.connections')[config('database.default')]);
+        $this->setAsGlobal();
+        $this->bootEloquent();
+    }
 }
