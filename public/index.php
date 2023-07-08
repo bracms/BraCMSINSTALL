@@ -11,6 +11,7 @@ const PUBLIC_ROOT = __DIR__ ;
 
 require __DIR__ . '/../vendor/autoload.php';
 
+const BRA_ENV = "WEB";
 $ico = new Container();
 $ico->instance('ico', Container::setInstance($ico));
 $ico->instance('request', $ico->make(BraRequest::class)); // config free
