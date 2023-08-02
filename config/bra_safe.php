@@ -5,6 +5,7 @@ return [
 	'default_ctrl' => "index", #default controller for web
 	'default_act' => "index", #default action for web
 	'sql_debug' => false, # sql debug
+    'list_mode' => 'false', # tabulor table
 	'is_api' => true, #for cloud dev
     'login_module' => 'wechat_off', #for cloud dev
     'super_admin_ip' => '', # super admin IP address

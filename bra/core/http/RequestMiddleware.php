@@ -86,14 +86,14 @@ class RequestMiddleware extends Middleware {
 
         if (!preg_match($UUIDv4, $datas['bra_uuid'])) {
             if(BraRequest::$holder->getMethod()  === 'OPTIONS'){
-                hour_log(BraRequest::$holder->getMethod() , chl: 'request');
+                daily_log(BraRequest::$holder->getMethod() , chl: 'request');
                 abort(bra_res([200, 200], '' ));
             }
 
             abort(bra_res([500, 404], 'UUID Not Found' ,data: [BraRequest::$holder->request->all()]));
         }else{
 
-            hour_log(BraRequest::$holder->getMethod() , chl: 'request');
+            daily_log(BraRequest::$holder->getMethod() , chl: 'request');
         }
         $cas = explode("@", $query['page_name']);
         unset($query['page_name']);

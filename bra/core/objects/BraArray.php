@@ -17,15 +17,20 @@ use Bra\core\facades\BraCache;
  * @package Bra\core\objects
  */
 class BraArray {
+    private static array $configs = [];
 
 	public static function get_config ($title, $area_id = 0) {
+        if(isset(self::$configs[$title])){
+            return self::$configs[$title];
+        }
 		$donde = [];
 		$donde['title'] = $title;
 		if($area_id){
 			$donde['area_id'] = $area_id;
 		}
 		$item = D("config")->bra_item($donde);
-		return json_decode($item['data'] ?? '' , 1) ?? [];
+        self::$configs[$title] = json_decode($item['data'] ?? '' , 1) ?? [];
+        return self::$configs[$title];
 	}
 
 	public static function to_array ($collection) {

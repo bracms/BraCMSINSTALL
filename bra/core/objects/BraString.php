@@ -1116,6 +1116,9 @@ class BraString {
         preg_match_all('/{(.*?)}/', $tpl_str, $match);
         foreach ($match[1] as $key => $val) {
             $v = isset($datas[$val]) ? $datas[$val] : '';
+            if(is_array($v)){
+                $v = join(',' , $v);
+            }
             $tpl_str = str_replace($match[0][$key], $v, $tpl_str);
         }
 
@@ -1226,7 +1229,16 @@ class BraString {
         return round($s, $decimal);
     }
 
-    public static function random_string(int $length = 16,int $type = null,  string $charset = '', string $prefix = '', string $suffix = ''): string {
+    /**
+     * 获取指定长度的随机字母数字组合的字符串
+     *
+     * @param int $length
+     * @param int $type
+     * @param string $addChars
+     * @return string
+     */
+
+    public static function generateRandomString(int $length = 16,int $type = null,  string $charset = '', string $prefix = '', string $suffix = ''): string {
         $randomString = '';
         $charsets = match ($type) {
             0 => 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz012345678901234567890123456789' . $charset,
@@ -1242,7 +1254,6 @@ class BraString {
         }
         return $prefix . $randomString . $suffix;
     }
-
     public static function random(int $length = 6, int $type = null, string $addChars = '', string $predChars = ''): string {
         $predCharsLength = mb_strlen($predChars, 'utf-8');
         $chars = match ($type) {

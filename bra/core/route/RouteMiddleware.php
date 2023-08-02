@@ -2,6 +2,7 @@
 
 namespace Bra\core\route;
 
+use Bra\core\http\BraRequest;
 use Bra\core\middleware\Middleware;
 
 class RouteMiddleware extends Middleware {
@@ -17,7 +18,10 @@ class RouteMiddleware extends Middleware {
 				break;
 			case 1:
 				if (!isset($web_routes[ROUTE_M])) {
-                    abort(bra_res([40405, 404], 'Route not found for module,May be it is not installed for module ' . ROUTE_M));
+                    abort(bra_res([40405, 404],
+                        'Route not found for module,May be it is not installed for module ' . ROUTE_M ,
+                    data: BraRequest::get()
+                    ));
 				}
 				break;
 			case 2:

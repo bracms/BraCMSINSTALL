@@ -15,6 +15,10 @@ function ico($name) {
     }
 }
 
+function app() : \Bra\core\App{
+    return Container::getInstance()->get('app');
+}
+
 function config($key) {
     return is_null($key) ? ico('config')->items : ico('config')->get($key);
 }
@@ -121,8 +125,7 @@ function local_path($path = ''): string {
 }
 
 #[NoReturn] function abort($bra_res, $type = '', $headers = [] , $config = []) {
-
-    hour_log(json_encode($bra_res), chl: 'abort');
+    daily_log(json_encode($bra_res), chl: 'abort');
     ico('app')->abort($bra_res, $type, $headers , $config);
 }
 
