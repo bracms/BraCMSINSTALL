@@ -23,7 +23,8 @@
     "flc/dysms": "^1.0",
     "phpoffice/phpspreadsheet": "^1.25",
     "ext-mbstring": "*",
-    "ext-openssl": "*"
+    "ext-openssl": "*",
+    "tencentcloud/tencentcloud-sdk-php": "^3.0"
   },
   "autoload": {
     "files": [

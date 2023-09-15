@@ -117,7 +117,7 @@ class  IndexPage
         if (!BraString::is_password($query['password'])) {
             return bra_res(501, "对不起，密码不合法！");
         }
-        BraCache::set('admin_install_info', ['user_name' => $query['user_name'], 'password' => $query['password']]);
+        BraCache::set('admin_install_info', ['user_name' => $query['user_name'], 'password' => $query['password']], expire:  86400);
         return bra_res(  1,  '数据库连接成功' , make_url('install/index/download_file'));
 
     }
